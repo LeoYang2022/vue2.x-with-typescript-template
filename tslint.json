@@ -1,19 +1,34 @@
 {
-  "defaultSeverity": "warning",
-  "extends": [
-    "tslint:recommended"
-  ],
-  "linterOptions": {
-    "exclude": [
-      "node_modules/**"
-    ]
-  },
-  "rules": {
-    "indent": [true, "spaces", 2],
-    "interface-name": false,
-    "no-consecutive-blank-lines": false,
-    "object-literal-sort-keys": false,
-    "ordered-imports": false,
-    "quotemark": [true, "single"]
-  }
+    "defaultSeverity": "warning",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "linterOptions": {
+        "exclude": [
+            "node_modules/**"
+        ]
+    },
+    "rules": {
+        "indent": [ false, "spaces", 2 ],
+        "interface-name": false,
+        "no-consecutive-blank-lines": false,
+        "object-literal-sort-keys": false,
+        "ordered-imports": false,
+        "quotemark": false,
+        "no-any": [ false, {"ignore-rest-args": true}],
+        "no-non-null-assertion": true,
+        "no-console": false,
+        "no-promise-as-boolean": true,
+        "no-return-await": true,
+        "no-sparse-arrays": true,
+        "static-this": true,
+        "switch-default": true,
+        "triple-equals": true,
+        "member-ordering": false,
+        "no-trailing-whitespace": false,
+        "member-access": false,
+        "max-classes-per-file": false,
+        "class-methods-use-this": [ false ],
+        "semicolon": false
+    }
 }

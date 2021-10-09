@@ -1,0 +1,112 @@
+什么是TypeScript？
+TypeScript（简称：ts）是JavaScript的超集，具有“可选的类型“并可以编译为纯JavaScript。从技术上讲TypeScript就是具有静态类型（在编译时就能发现类型上的错误，可以比动态类型更早的找到 bug）的 JavaScript 。TS 在编译时强语言 ，运行时（解析成JS）是弱语言。
+
+TypeScript本质上是一个JS linter（JS检测工具）。
+
+
+
+TS常用库：
+1、vue-class-component
+2、vue-property-decorator：包括 Vue, Component, Inject, Provide, Prop, Model, Watch, Emit, Mixins
+3、vuex-module-decorators：包括 Module, VuexModule, Mutation, Action, MutationAction, getModule
+
+注：@Component 指令必须是有className的存在。
+1、export default class Test extends Vue{}	// 需要@Component
+2、export default extends Vue.extend({ })	// 不需要@Component
+
+组件使用：
+1、data 对象
+export default class Test extends Vue {
+    private name: string;
+}
+
+2、Prop 声明
+@Prop({ default: false }) private isCollapse!: boolean;
+@Prop({ default: true }) private isFirstLevel!: boolean;
+@Prop({ default: "" }) private basePath!: string;
+注：!: 表示一定存在，?: 表示可能不存在。这两种在语法上叫赋值断言
+@Prop(options: (PropOptions | Constructor[] | Constructor) = {})
+PropOptions，可以使用以下选项：type，default，required，validator
+Constructor[]，指定 prop 的可选类型
+Constructor，例如 String，Number，Boolean 等，指定 prop 的类型
+
+3、method（方法）声明---去除 methods对象
+public clickFunc(): void {
+    console.log(this.name)
+    console.log(this.msg)
+}
+
+4、Watch 监听属性
+@Watch("$route", { immediate: true })
+private onRouteChange(route: Route) {
+    const query = route.query as Dictionary<string>;
+    if (query) {
+        this.redirect = query.redirect;
+        this.otherQuery = this.getOtherQuery(query);
+    }
+}
+
+① @Watch(path: string, options: WatchOptions = {})
+options 包含两个属性 immediate?:boolean 侦听开始之后是否立即调用该回调函数 / deep?:boolean 被侦听的对象的属性被改变时，是否调用该回调函数
+
+② @Watch('arr', { immediate: true, deep: true }) onArrChanged(newValue: number[], oldValue: number[]) {}
+
+
+5、computed 计算属性
+public get allname() {
+    return 'computed ' + this.name;
+}
+
+
+6、生命周期函数
+public created(): void {
+    console.log('created');
+}
+
+public mounted():void{
+    console.log('mounted')
+}
+
+
+7、emit 事件（暴露多个值的情况？？？）
+import { Vue, Component, Emit } from 'vue-property-decorator'
+@Component
+export default class MyComponent extends Vue {
+    public count = 0
+
+    @Emit()		======>	this.$emit('add-to-count', n)
+    addToCount(n: number) {
+        this.count += n
+    }
+
+    @Emit('reset')	======>	this.$emit('reset')
+    resetCount() {
+        this.count = 0
+    }
+
+    @Emit()		======>	this.$emit('return-value', 10)
+    returnValue() {
+        return 10
+    }
+
+    @Emit()		======>	this.$emit('on-input-change', e.target.value, e)
+    onInputChange(e) {
+        return e.target.value
+    }
+
+    @Emit()		======>	this.$emit('promise', value)
+    promise() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+            resolve( value );
+            }, 0)
+        })
+    }
+}
+
+
+
+
+
+
+
